@@ -20,6 +20,11 @@ document.getElementById('setGroupBtn').addEventListener('click', () => {
 })
 
 function createGroup(isAuto){
+    if(document.querySelectorAll('strong.win').length){
+        alert('이미 경기가 시작되어 불가능합니다.');
+        return;
+    }
+    
     const lis = document.querySelectorAll('#teamList li');
     let anyBlank = false;
     lis.forEach((li) => {
@@ -181,6 +186,11 @@ function setRecord(){
 
 function bindingEvent(){
     function addRow(){
+        if(document.querySelectorAll('strong.win').length){
+            alert('이미 경기가 시작되어 불가능합니다.');
+            return;
+        }
+
         document.getElementById('teamList').appendChild(liTmpl());
         lastTag('#teamList li').querySelector('input').focus();
         bindingEvent();
@@ -191,8 +201,13 @@ function bindingEvent(){
     })
     document.querySelectorAll('[data-id="removeTeam"]').forEach(btn => {
         btn.onclick = e => {
+            if(document.querySelectorAll('strong.win').length){
+                alert('이미 경기가 시작되어 불가능합니다.');
+                return;
+            }
+
             if(document.querySelectorAll('#teamList li').length < 2){
-                alert('적어도 1개는 있어야합니다.');
+                alert('적어도 1개는 있어야 합니다.');
                 return;
             }
             e.currentTarget.closest('li').remove();
