@@ -21,15 +21,21 @@ document.getElementById('setGroupBtn').addEventListener('click', () => {
 
 function createGroup(isAuto){
     const lis = document.querySelectorAll('#teamList li');
-    
-    // teamArr = Array.from(lis).map(li => ({name: li.querySelector('input').value}));
+    let anyBlank = false;
+    lis.forEach((li) => {
+        if(!li.querySelector('input[data-id="teamName"]').value) anyBlank = true; 
+    })
+
+    if(anyBlank){
+        alert('빈칸이 있습니다.');
+        return;
+    }
 
     if(!isAuto){
         const prmpt = window.prompt('생성 그룹을 입력해주세요.\nex)3명씩 3그룹: 333');
 
         if(!prmpt) return;
 
-        // if(!isNaN(+prmpt) && teamArr.length === prmpt.split('').reduce((sum, digit) => +sum + +digit, 0)){
         if(!isNaN(+prmpt) && lis.length === prmpt.split('').reduce((sum, digit) => +sum + +digit, 0)){
             groupInfo = prmpt;
         }else{
@@ -90,8 +96,6 @@ function calcGroup(len){
 
 function addTeam2Group(){
     for(let i = 0; i < document.querySelectorAll('#teamList li').length; i++){
-
-        // groupObj[abc[getRandomNum(0, groupInfo.length - 1)]].push(teamArr[i]);
         addTeam2ThisGroup(i);
     }
 
@@ -105,6 +109,7 @@ function addTeam2Group(){
 }
 
 function addTeam2ThisGroup(i){
+    if(!groupInfo) return;
     const rdmNum = getRandomNum(0, groupInfo.length - 1);
     if(groupObj[abc[rdmNum]].length >= +groupInfo[rdmNum]) return addTeam2ThisGroup(i);
 
@@ -139,8 +144,12 @@ function setRecord(){
             let win = 0;
             let lose = 0;
             document.querySelectorAll('#vsList [data-group-id="' + groupId + '"]').forEach(f2 => {
-                f2.querySelectorAll('ul li').forEach(li2 => {
+                const lis = f2.querySelectorAll('ul li');
+                let gameCnt = 0;
+                let totalCnt = lis.length;
+                lis.forEach(li2 => {
                     if(li2.querySelector('.win')){
+                        gameCnt++;
                         if(li2.querySelector('.win').dataset.code === li.dataset.idx){
                             win++;
                         }else{
@@ -151,12 +160,19 @@ function setRecord(){
 
                     }
                 })
+
+                let percentVal = (gameCnt / totalCnt * 100).toFixed(2);
+                if(percentVal.split('.')[0] === '100') percentVal = 100;
+
+                f2.querySelector('legend strong').innerHTML = gameCnt ? `(${percentVal}%)` : '';
+
             })
 
             li.querySelector('[data-id="record"]').innerHTML = '';
             if(win || lose){
                 li.querySelector('[data-id="record"]').textContent = `(${win + lose}전 ${win}승 ${lose}패)`;
             }
+
         })
 
     })
@@ -164,13 +180,14 @@ function setRecord(){
 
 
 function bindingEvent(){
+    function addRow(){
+        document.getElementById('teamList').appendChild(liTmpl());
+        lastTag('#teamList li').querySelector('input').focus();
+        bindingEvent();
+
+    }
     document.querySelectorAll('[data-id="addTeam"]').forEach(btn => {
-        btn.onclick = () => {
-            document.getElementById('teamList').appendChild(liTmpl());
-            document.querySelectorAll('#teamList')
-            lastTag('#teamList li').querySelector('input').focus();
-            bindingEvent();
-        }
+        btn.onclick = addRow;
     })
     document.querySelectorAll('[data-id="removeTeam"]').forEach(btn => {
         btn.onclick = e => {
@@ -182,14 +199,30 @@ function bindingEvent(){
             bindingEvent();
         }
     })
+    const imputs = document.querySelectorAll('[data-id="teamName"]');
+    imputs.forEach(input => {
+        input.onkeyup = e => {
+            if(e.keyCode === 13){
+                if(e.currentTarget === lastTag('[data-id="teamName"]')){
+                    addRow();
+                }else{
+                    const allInput = Array.from(imputs);
+                    const thisIdx = allInput.indexOf(e.currentTarget);
+
+                    imputs[thisIdx + 1].focus();
+                    imputs[thisIdx + 1].select();
+                }
+            };
+        }
+    });
 }
 
 const liTmpl = () => {
     const li = document.createElement('li');
     li.innerHTML = `
-        <input type="text" />
-        <button data-id="removeTeam">삭제</button>
-        <button data-id="addTeam">추가</button>
+        <input type="text" data-id="teamName" />
+        <button data-id="removeTeam">-</button>
+        <button data-id="addTeam">+</button>
     `;
 
     return li;
@@ -210,7 +243,7 @@ const vsListTmpl = (groupNm) => {
     const fieldset = document.createElement('fieldset');
     fieldset.dataset.groupId = groupNm;
     fieldset.innerHTML = `
-        <legend>${groupNm}</legend>
+        <legend>${groupNm}<strong></strong></legend>
         <ul data-id="vsList">
         </ul>
     `;
@@ -246,6 +279,7 @@ const liTmplInVsList = (a, b) => {
                 e.currentTarget.classList.remove('win');
             }else{
                 e.currentTarget.classList.add('win');
+                e.currentTarget.closest('li').classList.remove('ing');
                 li.querySelector('[data-id="' + (ab === 'a' ? 'b' : 'a') + '"]').classList.remove('win');
             }
 
@@ -254,14 +288,15 @@ const liTmplInVsList = (a, b) => {
     })
 
     li.querySelector('span').addEventListener('click', e => {
-        if(e.currentTarget.closest('li').classList.contains('ing')){
-            e.currentTarget.closest('li').classList.remove('ing');
-        }else{
-            e.currentTarget.closest('ul').querySelectorAll('li').forEach(li => {
-                li.classList.remove('ing');
-            });
-            e.currentTarget.closest('li').classList.add('ing');
-        }
+        e.currentTarget.closest('li').classList.toggle('ing');
+        // if(e.currentTarget.closest('li').classList.contains('ing')){
+        //     e.currentTarget.closest('li').classList.remove('ing');
+        // }else{
+        //     e.currentTarget.closest('ul').querySelectorAll('li').forEach(li => {
+        //         li.classList.remove('ing');
+        //     });
+        //     e.currentTarget.closest('li').classList.add('ing');
+        // }
     })
 
     return li;
@@ -269,4 +304,5 @@ const liTmplInVsList = (a, b) => {
 
 
 window.onload = () => {
+    document.querySelectorAll('[data-id="teamName"]')[0].focus();
 }

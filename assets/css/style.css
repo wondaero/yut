@@ -33,6 +33,7 @@
 html, body{
     height: 100%;
     font-family: Pretendard;
+    background: linear-gradient(-45deg,#fff 50%,#eee 0) 0/20px 20px;
 }
 h1{
     margin: 0;
@@ -48,11 +49,16 @@ main{
 article{
     border-bottom: 1px solid #ddd;
     padding: 10px;
+    background: rgba(255, 255, 255, .8);
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 article h2{
     font-weight: 400;
     padding: 10px;
-    background: linear-gradient(to right, #ff0, transparent);
+    background: linear-gradient(45deg, #ffffee, transparent);
 
 }
 
@@ -76,16 +82,22 @@ ol li input{
     box-sizing: border-box;
 }
 ol li button{
-    width: 80px;
+    width: 40px;
     height: 32px;
-    background: #11c;
+    background: powderblue;
     border: 0;
     border-radius: 5px;
     margin-left: 5px;
     color: #fff;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 ol li button[data-id="removeTeam"]{
-    background: #d00;
+    background: pink;
 }
 
 .btns{
@@ -97,7 +109,7 @@ ol li button[data-id="removeTeam"]{
 .btns button{
     width: 120px;
     height: 32px;
-    background: #282;
+    background: #5c705c;
     border: 1px solid #ddd;
     box-shadow: 0 0 5px #ddd;
     border: 0;
@@ -112,12 +124,26 @@ ol li button[data-id="removeTeam"]{
     margin-right: 10px;
     width: 100%;
     border: 0;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, .8);
     border-radius: 5px;
+    padding: 5px;
 }
 .group-list > fieldset:last-of-type,
 .vs-list > fieldset:last-of-type{
     margin-right: 0;
+}
+.group-list li{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 5px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+}
+.group-list li strong{
+    margin-right: 5px;
 }
 .group-list li span{
     font-size: 14px;
@@ -126,6 +152,12 @@ legend{
     padding: 0 10px;
     background: #fff;
     font-size: 36px;
+    display: flex;
+    align-items: center;
+}
+legend strong{
+    font-size: 14px;
+    margin-left: 5px;
 }
 ul{
     margin: 0;
@@ -138,6 +170,7 @@ li{
 
 .vs-list ul{
     list-style: none;
+    padding: 0;
 }
 .vs-list li{
     display: flex;
@@ -155,14 +188,16 @@ li{
 .vs-list li *{
     cursor: pointer;
     padding: 3px;
+    width: 100%;
+    text-align: center;
 }
 .vs-list li span{
+    font-size: 12px;
 }
 .vs-list li.ing{
     background: #ace;
 }
 .vs-list li .win{
-    transform: scale(1.2);
     background: rgba(255, 255, 0, .8);
     box-shadow: 0 0 8px #ff0;
 }
