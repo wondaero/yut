@@ -1,0 +1,155 @@
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../font/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../font/Pretendard-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../font/Pretendard-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../font/Pretendard-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../font/Pretendard-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+
+
+html, body{
+    height: 100%;
+    font-family: Pretendard;
+}
+h1{
+    margin: 0;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    transform: rotate(-2deg);
+}
+main{
+    padding: 10px;
+}
+
+article{
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+article h2{
+    font-weight: 400;
+    padding: 10px;
+    background: linear-gradient(to right, #ff0, transparent);
+
+}
+
+ol li{
+    margin-bottom: 10px;
+}
+ol li:nth-of-type{
+    margin-bottom: 0;
+}
+ol li *{
+    vertical-align: top;
+}
+ol li input{
+    /* flex: 1; */
+    width: 320px;
+    height: 32px;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+ol li button{
+    width: 80px;
+    height: 32px;
+    background: #11c;
+    border: 0;
+    border-radius: 5px;
+    margin-left: 5px;
+    color: #fff;
+}
+ol li button[data-id="removeTeam"]{
+    background: #d00;
+}
+
+.btns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+.btns button{
+    width: 120px;
+    height: 32px;
+    background: #282;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 5px #ddd;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    margin-left: 5px;
+}
+.group-list, .vs-list{
+    display: flex;
+}
+.group-list > fieldset, .vs-list > fieldset{
+    margin-right: 10px;
+    width: 100%;
+    border: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    border-radius: 5px;
+}
+.group-list > fieldset:last-of-type,
+.vs-list > fieldset:last-of-type{
+    margin-right: 0;
+}
+.group-list li span{
+    font-size: 14px;
+}
+legend{
+    padding: 0 10px;
+    background: #fff;
+    font-size: 36px;
+}
+
+li{
+    font-size: 20px;
+}
+
+.vs-list ul{
+    list-style: none;
+}
+.vs-list li{
+    display: flex;
+    align-items: center;
+}
+.vs-list li *{
+    cursor: pointer;
+    padding: 5px 10px;
+}
+.vs-list li span{
+}
+.vs-list li.ing{
+    background: #ace;
+}
+.vs-list li .win{
+    transform: scale(1.2);
+    background: rgba(255, 255, 0, .8);
+    box-shadow: 0 0 8px #ff0;
+}
