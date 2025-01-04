@@ -142,10 +142,19 @@ li{
 .vs-list li{
     display: flex;
     align-items: center;
+    flex-direction: column;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+.vs-list li:last-of-type{
+    margin-bottom: 0;
 }
 .vs-list li *{
     cursor: pointer;
-    padding: 5px;
+    padding: 3px;
 }
 .vs-list li span{
 }
