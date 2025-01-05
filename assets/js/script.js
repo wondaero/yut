@@ -214,18 +214,18 @@ function bindingEvent(){
             bindingEvent();
         }
     })
-    const imputs = document.querySelectorAll('[data-id="teamName"]');
-    imputs.forEach(input => {
+    const inputs = document.querySelectorAll('[data-id="teamName"]');
+    inputs.forEach(input => {
         input.onkeyup = e => {
             if(e.keyCode === 13){
                 if(e.currentTarget === lastTag('[data-id="teamName"]')){
                     addRow();
                 }else{
-                    const allInput = Array.from(imputs);
+                    const allInput = Array.from(inputs);
                     const thisIdx = allInput.indexOf(e.currentTarget);
 
-                    imputs[thisIdx + 1].focus();
-                    imputs[thisIdx + 1].select();
+                    inputs[thisIdx + 1].focus();
+                    inputs[thisIdx + 1].select();
                 }
             };
         }
